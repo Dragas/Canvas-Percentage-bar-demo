@@ -1,0 +1,54 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <canvas id="canvas" height="500" width="400"></canvas>
+        <script>
+            const canvas = document.getElementById("canvas");
+
+            const ctx = canvas.getContext("2d");
+
+            const width = canvas.width;
+            const height = canvas.height;
+            const relativeWidthMargin = 0.1;
+            const relativeHeightMargin = 0.2;
+            const leftOffset = relativeWidthMargin * width;
+            const barWidth = (1 - 2 * relativeWidthMargin) * width;
+            const barHeight = relativeHeightMargin / 4 * height;
+            const RED = "#FF0B00";
+            const YELLOW = "#FFC213";
+            const GREEN = "#1F9112";
+            const greenSteps = 4;
+            const yellowSteps = 4;
+            // const greenStep = Math.max(YELLOW, GREEN) / greenSteps;
+            // const yellowStep = Math.max(YELLOW, RED) / yellowSteps;
+            const initialVerticalOffset = (1 - relativeHeightMargin) * height;
+            ctx.textAlign = "center";
+            ctx.font = "30px serif";
+
+            function renderPercentage(percentage) {
+                ctx.clearRect(0, 0, height, width);
+                const barCount = (percentage / 10) | 0;
+                let currentVerticalOffset = initialVerticalOffset;
+                for (let i = 0; i < barCount; i++) {
+                    ctx.fillStyle = getColor(i);
+                    ctx.fillRect(leftOffset, currentVerticalOffset, barWidth, barHeight);
+                    currentVerticalOffset -= barHeight * 1.1;
+                }
+                ctx.fillStyle = getColor(barCount - 1);
+                ctx.fillText(percentage + "%", canvas.width / 2, currentVerticalOffset + barHeight * 0.8);
+            }
+
+            function getColor(step) {
+                if(step < greenSteps)
+                    return GREEN;
+                if(step < greenSteps + yellowSteps)
+                    return YELLOW;
+                return RED;
+            }
+
+            renderPercentage(100);
+        </script>
+    </body>
+</html>
