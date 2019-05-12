@@ -28,7 +28,7 @@
             ctx.font = "30px serif";
 
             function renderPercentage(percentage) {
-                ctx.clearRect(0, 0, height, width);
+                ctx.clearRect(0, 0, width, height);
                 const barCount = (percentage / 10) | 0;
                 let currentVerticalOffset = initialVerticalOffset;
                 for (let i = 0; i < barCount; i++) {
