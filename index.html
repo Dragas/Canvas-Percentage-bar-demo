@@ -31,9 +31,16 @@
                 ctx.clearRect(0, 0, width, height);
                 const barCount = (percentage / 10) | 0;
                 let currentVerticalOffset = initialVerticalOffset;
-                for (let i = 0; i < barCount; i++) {
+                const expectedBarCount = (barCount === 0 && percentage === 0) ? 10 : barCount;
+                for (let i = 0; i < expectedBarCount; i++) {
+                    //const color = barCount === 0 ? getBlurryColor(i) : getColor(i);
                     ctx.fillStyle = getColor(i);
-                    ctx.fillRect(leftOffset, currentVerticalOffset, barWidth, barHeight);
+                    ctx.strokeStyle = ctx.fillStyle
+                    if(barCount !== 0)
+                        ctx.fillRect(leftOffset, currentVerticalOffset, barWidth, barHeight);
+                    else {
+                        ctx.strokeRect(leftOffset, currentVerticalOffset, barWidth, barHeight);
+                    }
                     currentVerticalOffset -= barHeight * 1.1;
                 }
                 ctx.fillStyle = getColor(barCount - 1);
@@ -48,7 +55,7 @@
                 return RED;
             }
 
-            renderPercentage(100);
+            renderPercentage(0);
         </script>
     </body>
 </html>
